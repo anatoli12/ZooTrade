@@ -5,10 +5,8 @@ import com.tinqin.api.operation.vendor.edit.EditVendorInput;
 import com.tinqin.api.operation.vendor.edit.EditVendorOperation;
 import com.tinqin.api.operation.vendor.edit.EditVendorOutput;
 import com.tinqin.persistence.model.Vendor;
-
-import java.util.UUID;
-
 import com.tinqin.persistence.repository.VendorRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

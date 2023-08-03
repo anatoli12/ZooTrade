@@ -6,12 +6,11 @@ import com.tinqin.api.operation.item.findbyid.FindItemByIdOperation;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdOutput;
 import com.tinqin.persistence.model.Item;
 import com.tinqin.persistence.repository.ItemRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service

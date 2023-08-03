@@ -1,8 +1,7 @@
 package com.tinqin.api.operation.tag;
 
-import lombok.*;
-
 import java.util.Set;
+import lombok.*;
 
 @Builder
 @Getter

@@ -2,9 +2,9 @@ package com.tinqin.api.operation.multimedia.findall;
 
 import com.tinqin.api.base.ProcessorOutput;
 import com.tinqin.api.operation.multimedia.BaseMultimediaDTO;
+import java.util.Set;
 import lombok.*;
 
-import java.util.Set;
 @Builder
 @Getter
 @Setter

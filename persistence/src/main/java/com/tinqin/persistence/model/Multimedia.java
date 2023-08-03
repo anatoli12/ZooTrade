@@ -1,9 +1,8 @@
 package com.tinqin.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.UUID;
+import lombok.*;
 
 @Entity
 @Getter

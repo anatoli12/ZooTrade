@@ -2,10 +2,8 @@ package com.tinqin.api.operation.item.findall;
 
 import com.tinqin.api.base.ProcessorOutput;
 import com.tinqin.api.operation.item.BaseItemDTO;
-import lombok.*;
-
 import java.util.List;
-import java.util.Set;
+import lombok.*;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)

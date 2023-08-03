@@ -5,10 +5,8 @@ import com.tinqin.api.operation.tag.edit.EditTagInput;
 import com.tinqin.api.operation.tag.edit.EditTagOperation;
 import com.tinqin.api.operation.tag.edit.EditTagOutput;
 import com.tinqin.persistence.model.Tag;
-
-import java.util.UUID;
-
 import com.tinqin.persistence.repository.TagRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

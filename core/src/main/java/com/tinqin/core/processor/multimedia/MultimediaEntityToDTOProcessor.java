@@ -2,10 +2,9 @@ package com.tinqin.core.processor.multimedia;
 
 import com.tinqin.api.operation.multimedia.BaseMultimediaDTO;
 import com.tinqin.persistence.model.Multimedia;
+import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MultimediaEntityToDTOProcessor {

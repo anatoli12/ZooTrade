@@ -6,12 +6,11 @@ import com.tinqin.api.operation.multimedia.edit.EditMultimediaOperation;
 import com.tinqin.api.operation.multimedia.edit.EditMultimediaOutput;
 import com.tinqin.persistence.model.Multimedia;
 import com.tinqin.persistence.repository.MultimedaRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service

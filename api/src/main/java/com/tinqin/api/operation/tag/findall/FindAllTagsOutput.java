@@ -2,9 +2,9 @@ package com.tinqin.api.operation.tag.findall;
 
 import com.tinqin.api.base.ProcessorOutput;
 import com.tinqin.api.operation.tag.BaseTagDTO;
+import java.util.Set;
 import lombok.*;
 
-import java.util.Set;
 @Builder
 @Getter
 @Setter

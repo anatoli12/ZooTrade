@@ -6,13 +6,11 @@ import com.tinqin.api.operation.item.delete.DeleteItemOperation;
 import com.tinqin.api.operation.item.delete.DeleteItemOutput;
 import com.tinqin.persistence.model.Item;
 import com.tinqin.persistence.repository.ItemRepository;
-import jakarta.transaction.Transactional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

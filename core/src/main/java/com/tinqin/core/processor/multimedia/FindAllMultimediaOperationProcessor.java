@@ -6,7 +6,6 @@ import com.tinqin.api.operation.multimedia.findall.FindAllMultimediaOperation;
 import com.tinqin.api.operation.multimedia.findall.FindAllMultimediaOutput;
 import com.tinqin.persistence.model.Multimedia;
 import com.tinqin.persistence.repository.MultimedaRepository;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;

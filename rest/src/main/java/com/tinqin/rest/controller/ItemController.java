@@ -1,8 +1,6 @@
 package com.tinqin.rest.controller;
 
-import com.tinqin.api.operation.item.addmultimediatoitem.AddMultimediaToItemInput;
 import com.tinqin.api.operation.item.addmultimediatoitem.AddMultimediaToItemOperation;
-import com.tinqin.api.operation.item.addmultimediatoitem.AddMultimediaToItemOutput;
 import com.tinqin.api.operation.item.addtagstoitem.AddTagsToItemInput;
 import com.tinqin.api.operation.item.addtagstoitem.AddTagsToItemOperation;
 import com.tinqin.api.operation.item.addtagstoitem.AddTagsToItemOutput;
@@ -33,13 +31,15 @@ import com.tinqin.api.operation.item.removevendorsfromitem.RemoveVendorsFromItem
 import com.tinqin.api.operation.item.update.EditItemInput;
 import com.tinqin.api.operation.item.update.EditItemOperation;
 import com.tinqin.api.operation.item.update.EditItemOutput;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
-import jakarta.websocket.server.PathParam;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -61,12 +61,16 @@ public class ItemController {
   @Transactional
   public ResponseEntity<FindAllItemsOutput> findAll(@RequestParam Boolean showDeleted,
                                                     @RequestParam Optional<Integer> pageNumber,
-                                                    @RequestParam Optional<Integer> pageSize) {
+                                                    @RequestParam Optional<Integer> pageSize,
+                                                    @RequestParam Optional<String> titleContains,
+                                                    @RequestParam Optional<String> descriptionContains) {
 
     FindAllItemsInput input = FindAllItemsInput.builder()
             .showDeleted(showDeleted)
             .pageNumber(pageNumber)
             .pageSize(pageSize)
+            .titleContains(titleContains)
+            .descriptionContains(descriptionContains)
             .build();
     return ResponseEntity.ok(
         findAllItemsOperation.process(input));
@@ -80,29 +84,58 @@ public class ItemController {
   }
 
   @PostMapping
+  @Operation(summary = "Create item", description = "Create a new item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<CreateItemOutput> create(@RequestBody CreateItemInput request) {
     return ResponseEntity.ok(createItemOperation.process(request));
   }
 
   @DeleteMapping
   @Transactional
+  @Operation(summary = "Delete item", description = "Delete an existing item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<DeleteItemOutput> delete(@RequestBody DeleteItemInput request) {
     return ResponseEntity.ok(deleteItemOperation.process(request));
   }
 
   @PutMapping
+  @Operation(summary = "Update item", description = "Update an existing item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<EditItemOutput> update(@RequestBody EditItemInput request) {
     return ResponseEntity.ok(editItemOperation.process(request));
   }
 
   @PostMapping("/add-tags")
   @Transactional
+  @Operation(summary = "Add tags to item", description = "Add tags to an existing item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item/Tag not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<AddTagsToItemOutput> addTags(@RequestBody AddTagsToItemInput request) {
     return ResponseEntity.ok(addTagsToItemOperation.process(request));
   }
 
   @DeleteMapping("/remove-tags")
   @Transactional
+  @Operation(summary = "Remove tags from item", description = "Remove tags from an existing item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item/Tag not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<RemoveTagsFromItemOutput> deleteTags(
       @RequestBody RemoveTagsFromItemInput request) {
     return ResponseEntity.ok(removeTagsFromItemOperation.process(request));
@@ -110,6 +143,12 @@ public class ItemController {
 
   @PostMapping("/add-vendors")
   @Transactional
+  @Operation(summary = "Add vendors to item", description = "Add vendors to an existing item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item/Vendor not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<AddVendorsToItemOutput> addVendors(
       @RequestBody AddVendorsToItemInput request) {
     return ResponseEntity.ok(addVendorsToItemOperation.process(request));
@@ -117,17 +156,17 @@ public class ItemController {
 
   @DeleteMapping("/remove-vendors")
   @Transactional
+  @Operation(summary = "Remove vendors from item", description = "Remove vendors from an existing item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item/Vendor not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<RemoveVendorsFromItemOutput> deleteVendors(
       @RequestBody RemoveVendorsFromItemInput request) {
     return ResponseEntity.ok(removeVendorsFromItemOperation.process(request));
   }
 
-//  @PostMapping("/add-multimedia")
-//  @Transactional
-//  public ResponseEntity<AddMultimediaToItemOutput> addMultimedia(
-//      @RequestBody AddMultimediaToItemInput request) {
-//    return ResponseEntity.ok(addMultimediaToItemOperation.process(request));
-//  }
 
   @DeleteMapping("/remove-multimedia")
   @Transactional

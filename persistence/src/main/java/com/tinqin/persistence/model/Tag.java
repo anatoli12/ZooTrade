@@ -3,7 +3,6 @@ package com.tinqin.persistence.model;
 import jakarta.persistence.*;
 import java.util.Set;
 import java.util.UUID;
-
 import lombok.*;
 
 @Entity

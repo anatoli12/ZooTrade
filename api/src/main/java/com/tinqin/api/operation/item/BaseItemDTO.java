@@ -1,8 +1,7 @@
 package com.tinqin.api.operation.item;
 
-import lombok.*;
-
 import java.util.Set;
+import lombok.*;
 
 @Getter
 @Setter

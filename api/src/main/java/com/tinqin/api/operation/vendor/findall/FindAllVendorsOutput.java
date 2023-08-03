@@ -2,9 +2,8 @@ package com.tinqin.api.operation.vendor.findall;
 
 import com.tinqin.api.base.ProcessorOutput;
 import com.tinqin.api.operation.vendor.BaseVendorDTO;
-import lombok.*;
-
 import java.util.Set;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor

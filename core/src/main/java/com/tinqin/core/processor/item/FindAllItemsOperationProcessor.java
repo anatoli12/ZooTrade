@@ -19,35 +19,25 @@ import org.springframework.stereotype.Service;
 public class FindAllItemsOperationProcessor implements FindAllItemsOperation {
   private final EntityManager entityManager;
   private final ItemRepository itemRepository;
-
-  //  Boolean showDeleted;
-  //  Optional<Integer> page;
-  //  Optional<Integer> size;
   @Override
   public FindAllItemsOutput process(FindAllItemsInput request) {
 
-    int pageNumber = Math.max(0, request.getPageNumber().orElse(0));
-    int size = Math.max(1, Math.min(request.getPageSize().orElse(10), 50));
+    int pageNumber = request.getPageNumber().orElse(0);
+
+    // Get the pageSize from the request, or use 10 if it is not present, less than 1, or greater
+    // than 50
+    int size = request.getPageSize().filter(s -> s >= 1 && s <= 50).orElse(10);
 
     Pageable pageable = PageRequest.of(pageNumber, size);
-    Boolean showDeleted = request.getShowDeleted();
-    Page<Item> items =
-        Boolean.TRUE.equals(showDeleted)
-            ? itemRepository.findAll(pageable)
-            : itemRepository.findAllByIsDeleted(false, pageable);
-
+    Page<Item> items = itemRepository.findAll(
+            request.getTitleContains(),
+            request.getDescriptionContains(),
+            request.getShowDeleted(),
+            pageable
+    );
     List<BaseItemDTO> result =
         items.stream().map(ItemEntityToDTOProcessor::convertEntityToDTO).toList();
 
     return FindAllItemsOutput.builder().items(result).build();
-    //    Set<Item> items =
-    //        itemRepository.findAll().stream()
-    //            .filter(i -> request.isShowDeleted() || !i.isDeleted())
-    //            .collect(Collectors.toSet());
-    //    Set<BaseItemDTO> base =
-    //        items.stream()
-    //            .map(ItemEntityToDTOProcessor::convertEntityToDTO)
-    //            .collect(Collectors.toSet());
-    //    return FindAllItemsOutput.builder().items(base).build();
   }
 }

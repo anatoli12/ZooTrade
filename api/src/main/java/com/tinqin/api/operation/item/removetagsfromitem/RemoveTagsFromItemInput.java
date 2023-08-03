@@ -1,9 +1,8 @@
 package com.tinqin.api.operation.item.removetagsfromitem;
 
 import com.tinqin.api.base.ProcessorInput;
-import lombok.*;
-
 import java.util.Set;
+import lombok.*;
 
 @Getter
 @Setter
