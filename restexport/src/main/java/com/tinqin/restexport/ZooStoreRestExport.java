@@ -5,6 +5,9 @@ import com.tinqin.api.operation.item.findbyid.FindItemByIdOutput;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Headers({"Content-Type: application/json"})
 public interface ZooStoreRestExport {
@@ -12,17 +15,24 @@ public interface ZooStoreRestExport {
   @RequestLine("GET /item/{id}")
   FindItemByIdOutput findItemById(@Param("id") String id);
 
-  @RequestLine(
-      "GET /item/all?showDeleted={showDeleted}&pageNumber={pageNumber}&pageSize={pageSize}")
-  FindAllItemsOutput findAll(
-      @Param("showDeleted") Boolean showDeleted,
-      @Param("pageNumber") Integer pageNumber,
-      @Param("pageSize") Integer pageSize);
+  default FindAllItemsOutput findAll(
+          Boolean showDeleted,
+          Optional<Integer> pageNumber,
+          Optional<Integer> pageSize,
+          Optional<String> titleContains,
+          Optional<String> descriptionContains) {
 
-  @RequestLine(
-          "GET /item/all")
-  FindAllItemsOutput findAll1(
-          @Param("showDeleted") Boolean showDeleted,
-          @Param("pageNumber") Integer pageNumber,
-          @Param("pageSize") Integer pageSize);
+    StringBuilder urlBuilder = new StringBuilder("?showDeleted=").append(showDeleted);
+    pageNumber.ifPresent(page -> urlBuilder.append("&pageNumber=").append(page));
+    pageSize.ifPresent(size -> urlBuilder.append("&pageSize=").append(size));
+    titleContains.ifPresent(title -> urlBuilder.append("&titleContains=").append(title));
+    descriptionContains.ifPresent(description -> urlBuilder.append("&descriptionContains=").append(description));
+
+    return findItemsInternal(urlBuilder.toString());
+  }
+
+  // Internal method to make the actual Feign request
+  @RequestLine("GET /item/all{?params}")
+  FindAllItemsOutput findItemsInternal(@Param("params") String params);
+
 }

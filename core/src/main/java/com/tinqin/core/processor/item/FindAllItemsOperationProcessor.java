@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class FindAllItemsOperationProcessor implements FindAllItemsOperation {
-  private final EntityManager entityManager;
   private final ItemRepository itemRepository;
   @Override
   public FindAllItemsOutput process(FindAllItemsInput request) {
