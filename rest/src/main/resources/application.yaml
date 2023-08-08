@@ -23,3 +23,7 @@ springdoc:
 
 server:
   port: 1234
+
+  logging:
+    level:
+      org.springframework.web.client.RestTemplate: DEBUG

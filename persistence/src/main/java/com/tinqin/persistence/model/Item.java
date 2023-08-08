@@ -1,6 +1,8 @@
 package com.tinqin.persistence.model;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import lombok.*;
@@ -37,4 +39,7 @@ public class Item extends BaseEntity {
       joinColumns = {@JoinColumn(name = "item_id")},
       inverseJoinColumns = {@JoinColumn(name = "tag_id")})
   private Set<Tag> tags;
+
+  @OneToMany(mappedBy = "item")
+  private List<Comment> comments;
 }

@@ -6,7 +6,6 @@ import com.tinqin.api.operation.item.findall.FindAllItemsOperation;
 import com.tinqin.api.operation.item.findall.FindAllItemsOutput;
 import com.tinqin.persistence.model.Item;
 import com.tinqin.persistence.repository.ItemRepository;
-import jakarta.persistence.EntityManager;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

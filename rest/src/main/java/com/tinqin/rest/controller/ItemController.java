@@ -1,5 +1,8 @@
 package com.tinqin.rest.controller;
 
+import com.tinqin.api.operation.item.addcommenttoitem.AddCommentToItemInput;
+import com.tinqin.api.operation.item.addcommenttoitem.AddCommentToItemOperation;
+import com.tinqin.api.operation.item.addcommenttoitem.AddCommentToItemOutput;
 import com.tinqin.api.operation.item.addmultimediatoitem.AddMultimediaToItemOperation;
 import com.tinqin.api.operation.item.addtagstoitem.AddTagsToItemInput;
 import com.tinqin.api.operation.item.addtagstoitem.AddTagsToItemOperation;
@@ -56,8 +59,9 @@ public class ItemController {
   private final RemoveTagsFromItemOperation removeTagsFromItemOperation;
   private final RemoveMultimediaFromItemOperation removeMultimediaFromItemOperation;
   private final RemoveVendorsFromItemOperation removeVendorsFromItemOperation;
+  private final AddCommentToItemOperation addCommentToItemOperation;
 
-  @GetMapping("/all")
+  @GetMapping("/all/params")
   @Transactional
   public ResponseEntity<FindAllItemsOutput> findAll(@RequestParam Boolean showDeleted,
                                                     @RequestParam Optional<Integer> pageNumber,
@@ -173,5 +177,12 @@ public class ItemController {
   public ResponseEntity<RemoveMultimediaFromItemOutput> deleteMultimedia(
       @RequestBody RemoveMultimediaFromItemInput request) {
     return ResponseEntity.ok(removeMultimediaFromItemOperation.process(request));
+  }
+
+  @PostMapping("/add-comment")
+  @Transactional
+  public ResponseEntity<AddCommentToItemOutput> addComment(
+          @RequestBody AddCommentToItemInput request){
+    return ResponseEntity.ok(addCommentToItemOperation.process(request));
   }
 }

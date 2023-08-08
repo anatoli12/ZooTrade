@@ -44,7 +44,7 @@ public class MultimediaController {
     return ResponseEntity.ok(findAllMultimediaOperation.process(new FindAllMultimediaInput()));
   }
 
-  @PatchMapping
+  @PutMapping
   @Transactional
   public ResponseEntity<EditMultimediaOutput> update(@RequestBody EditMultimediaInput request) {
     return ResponseEntity.ok(editMultimediaOperation.process(request));

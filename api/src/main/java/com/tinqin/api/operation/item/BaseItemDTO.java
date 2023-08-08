@@ -1,6 +1,9 @@
 package com.tinqin.api.operation.item;
 
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
 import lombok.*;
 
 @Getter
@@ -15,5 +18,6 @@ public class BaseItemDTO {
     protected Set<String> vendorIds;
     protected Set<String> multimediaIds;
     protected Set<String> tagIds;
+    protected List<UUID> commentIds;
     protected Boolean deleted;
 }

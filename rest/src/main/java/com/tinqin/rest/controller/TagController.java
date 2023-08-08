@@ -44,7 +44,7 @@ public class TagController {
     return ResponseEntity.ok(findAllTagsOperation.process(new FindAllTagsInput()));
   }
 
-  @PatchMapping
+  @PutMapping
   @Transactional
   public ResponseEntity<EditTagOutput> update(@RequestBody EditTagInput request) {
     return ResponseEntity.ok(editTagOperation.process(request));

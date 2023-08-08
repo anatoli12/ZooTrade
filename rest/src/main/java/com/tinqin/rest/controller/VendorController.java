@@ -44,7 +44,7 @@ public class VendorController {
     return ResponseEntity.ok(findAllVendorsOperation.process(new FindAllVendorsInput()));
   }
 
-  @PatchMapping
+  @PutMapping
   @Transactional
   public ResponseEntity<EditVendorOutput> update(@RequestBody EditVendorInput request) {
     return ResponseEntity.ok(editVendorOperation.process(request));
