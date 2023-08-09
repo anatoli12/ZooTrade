@@ -5,13 +5,9 @@ import com.tinqin.api.operation.item.findbyid.FindItemByIdOutput;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.util.UriBuilder;
+import java.util.Optional;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
-import java.util.Optional;
 
 @Headers({"Content-Type: application/json", "Accept: application/json"})
 public interface ZooStoreRestExport {
@@ -36,10 +32,6 @@ public interface ZooStoreRestExport {
 
     return findItemsInternal(uri.toString());
   }
-
-  // Internal method to make the actual Feign request
-//  @RequestLine("GET /item/all?{params}")
-//  FindAllItemsOutput findItemsInternal(@Param String params);
 
   @RequestLine("GET {url}")
   FindAllItemsOutput findItemsInternal(@Param String url);

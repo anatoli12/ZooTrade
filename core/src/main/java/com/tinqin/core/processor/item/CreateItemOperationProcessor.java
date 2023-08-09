@@ -56,8 +56,8 @@ public class CreateItemOperationProcessor implements CreateItemOperation {
             .description(input.getDescription())
             .tags(tagsToAdd)
             .vendors(vendorsToAdd)
-            //            .multimedia(multimediaToAdd)
             .multimedia(new HashSet<>())
+                .comments(new ArrayList<>())
             .build();
     itemEntity.setIsDeleted(false);
     itemRepository.save(itemEntity);
