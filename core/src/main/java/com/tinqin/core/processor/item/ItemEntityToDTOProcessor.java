@@ -2,7 +2,6 @@ package com.tinqin.core.processor.item;
 
 import com.tinqin.api.operation.item.BaseItemDTO;
 import com.tinqin.persistence.model.*;
-
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;

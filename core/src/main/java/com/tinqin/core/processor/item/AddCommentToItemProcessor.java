@@ -8,13 +8,12 @@ import com.tinqin.persistence.model.Comment;
 import com.tinqin.persistence.model.Item;
 import com.tinqin.persistence.repository.CommentRepository;
 import com.tinqin.persistence.repository.ItemRepository;
+import java.sql.Timestamp;
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.sql.Timestamp;
-import java.util.*;
 
 @Service
 @RequiredArgsConstructor

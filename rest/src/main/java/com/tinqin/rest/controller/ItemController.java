@@ -174,6 +174,12 @@ public class ItemController {
 
   @DeleteMapping("/remove-multimedia")
   @Transactional
+  @Operation(summary = "Remove multimedia", description = "Remove multimedia from item.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Multimedia not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<RemoveMultimediaFromItemOutput> deleteMultimedia(
       @RequestBody RemoveMultimediaFromItemInput request) {
     return ResponseEntity.ok(removeMultimediaFromItemOperation.process(request));
@@ -181,6 +187,12 @@ public class ItemController {
 
   @PostMapping("/add-comment")
   @Transactional
+  @Operation(summary = "Add comment to item", description = "Add comment to item")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", description = "Item not found", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "403", description = "Forbidden access", content = @Content(mediaType = "application/json"))
+  })
   public ResponseEntity<AddCommentToItemOutput> addComment(
           @RequestBody AddCommentToItemInput request){
     return ResponseEntity.ok(addCommentToItemOperation.process(request));

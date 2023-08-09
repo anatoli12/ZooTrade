@@ -1,10 +1,10 @@
 package com.tinqin.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
+import lombok.*;
 
 @Getter
 @Setter
@@ -27,4 +27,11 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id") // self-referencing foreign key
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> replies; // replies to this comment
 }
