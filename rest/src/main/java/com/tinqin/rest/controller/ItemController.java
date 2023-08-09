@@ -19,6 +19,9 @@ import com.tinqin.api.operation.item.delete.DeleteItemOutput;
 import com.tinqin.api.operation.item.findall.FindAllItemsInput;
 import com.tinqin.api.operation.item.findall.FindAllItemsOperation;
 import com.tinqin.api.operation.item.findall.FindAllItemsOutput;
+import com.tinqin.api.operation.item.findallregex.FindAllItemsRegexInput;
+import com.tinqin.api.operation.item.findallregex.FindAllItemsRegexOperation;
+import com.tinqin.api.operation.item.findallregex.FindAllItemsRegexOutput;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdInput;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdOperation;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdOutput;
@@ -55,6 +58,7 @@ public class ItemController {
   private final DeleteItemOperation deleteItemOperation;
   private final FindAllItemsOperation findAllItemsOperation;
   private final FindItemByIdOperation findItemByIdOperation;
+  private final FindAllItemsRegexOperation findAllItemsRegexOperation;
   private final EditItemOperation editItemOperation;
   private final RemoveTagsFromItemOperation removeTagsFromItemOperation;
   private final RemoveMultimediaFromItemOperation removeMultimediaFromItemOperation;
@@ -87,6 +91,18 @@ public class ItemController {
                     FindItemByIdInput.builder().id(id).build()));
   }
 
+  @GetMapping("/all/regex")
+  @Transactional
+  public ResponseEntity<FindAllItemsRegexOutput> findAllRegex(@RequestParam Optional<Integer> pageNumber,
+                                                              @RequestParam Optional<Integer> pageSize,
+                                                              @RequestParam String regex){
+    FindAllItemsRegexInput input = FindAllItemsRegexInput.builder()
+            .pageNumber(pageNumber)
+            .pageSize(pageSize)
+            .regex(regex)
+            .build();
+    return ResponseEntity.ok(findAllItemsRegexOperation.process(input));
+  }
   @PostMapping
   @Operation(summary = "Create item", description = "Create a new item.")
   @ApiResponses(value = {
