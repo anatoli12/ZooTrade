@@ -28,15 +28,13 @@ public class FindRepliesByCommentProcessor implements FindRepliesByCommentOperat
     parent
         .getReplies()
         .forEach(
-            c -> {
-              dtos.add(
-                  BaseCommentDTO.builder()
-                      .parentId(c.getParent().getCommentId())
-                      .timestamp(c.getCreationTimeStamp())
-                      .userId(c.getUserId())
-                      .text(c.getText())
-                      .build());
-            });
+            c -> dtos.add(
+                BaseCommentDTO.builder()
+                    .parentId(c.getParent().getCommentId())
+                    .timestamp(c.getCreationTimeStamp())
+                    .userId(c.getUserId())
+                    .text(c.getText())
+                    .build()));
     return FindRepliesByCommentOutput.builder().replyList(dtos).build();
   }
 }

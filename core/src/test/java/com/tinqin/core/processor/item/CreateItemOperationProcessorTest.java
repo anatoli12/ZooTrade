@@ -14,7 +14,6 @@ import com.tinqin.persistence.repository.ItemRepository;
 import com.tinqin.persistence.repository.TagRepository;
 import com.tinqin.persistence.repository.VendorRepository;
 import java.util.*;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -54,12 +53,8 @@ class CreateItemOperationProcessorTest {
     CreateItemInput input = CreateItemInput.builder()
             .description(description)
             .title(title)
-            .vendorIds(vendorIds.stream()
-                    .map(String::valueOf)
-            .collect(Collectors.toSet()))
-            .tagIds(tagIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.toSet()))
+            .vendorIds(new HashSet<>(vendorIds))
+            .tagIds(new HashSet<>(tagIds))
             .build();
 
     // Mock the vendor and tag repositories
@@ -113,12 +108,8 @@ class CreateItemOperationProcessorTest {
     CreateItemInput input = CreateItemInput.builder()
             .description(description)
             .title(title)
-            .vendorIds(vendorIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.toSet()))
-            .tagIds(tagIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.toSet()))
+            .vendorIds(new HashSet<>(vendorIds))
+            .tagIds(new HashSet<>(tagIds))
             .build();
 
     // Mock the vendor repository to return an empty Optional (not found)
@@ -147,12 +138,8 @@ class CreateItemOperationProcessorTest {
     CreateItemInput input = CreateItemInput.builder()
             .description(description)
             .title(title)
-            .vendorIds(vendorIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.toSet()))
-            .tagIds(tagIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.toSet()))
+            .vendorIds(new HashSet<>(vendorIds))
+            .tagIds(new HashSet<>(tagIds))
             .build();
 
     when(vendorRepository.findById(vendorId1)).thenReturn(Optional.of(new Vendor()));

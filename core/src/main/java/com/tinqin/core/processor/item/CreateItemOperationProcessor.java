@@ -28,7 +28,7 @@ public class CreateItemOperationProcessor implements CreateItemOperation {
   public CreateItemOutput process(CreateItemInput input) {
     Set<Vendor> vendorsToAdd =
         input.getVendorIds().stream()
-            .map(UUID::fromString)
+//            .map(UUID::fromString)
             .map(
                 vendorId ->
                     vendorRepository
@@ -40,7 +40,6 @@ public class CreateItemOperationProcessor implements CreateItemOperation {
 
     Set<Tag> tagsToAdd =
         input.getTagIds().stream()
-            .map(UUID::fromString)
             .map(
                 tagId ->
                     tagRepository

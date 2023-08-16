@@ -1,6 +1,5 @@
 package com.tinqin.persistence.model;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 import lombok.*;

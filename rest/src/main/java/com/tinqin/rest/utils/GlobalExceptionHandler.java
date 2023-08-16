@@ -1,4 +1,4 @@
-package com.tinqin.rest;
+package com.tinqin.rest.utils;
 
 import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;

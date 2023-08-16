@@ -1,11 +1,13 @@
 package com.tinqin.restexport;
 
 import com.tinqin.api.operation.item.findall.FindAllItemsOutput;
+import com.tinqin.api.operation.item.findallregex.FindAllItemsRegexOutput;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdOutput;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import java.util.Optional;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,13 +32,27 @@ public interface ZooStoreRestExport {
             .queryParamIfPresent("descriptionContains", descriptionContains)
             .build();
 
-    return findItemsInternal(uri.toString());
+    return findAllItemsInternal(uri.toString());
   }
 
   @RequestLine("GET {url}")
-  FindAllItemsOutput findItemsInternal(@Param String url);
+  FindAllItemsOutput findAllItemsInternal(@Param String url);
 
   @RequestLine("GET /item/all?showDeleted=true")
   FindAllItemsOutput findItemsTest();
+
+  default FindAllItemsRegexOutput findRegexItems(Optional<Integer> pageNumber,
+                                                 Optional<Integer> pageSize,
+                                                 String regex){
+    UriComponents uri = UriComponentsBuilder.fromPath("/item/all/regex")
+            .queryParam("regex", regex)
+            .queryParamIfPresent("pageNumber", pageNumber)
+            .queryParamIfPresent("pageSize", pageSize)
+            .build();
+
+    return findRegexItemsInternal(uri.toString());
+  }
+  @RequestLine("GET {url}")
+  FindAllItemsRegexOutput findRegexItemsInternal(@Param String url);
 
 }
