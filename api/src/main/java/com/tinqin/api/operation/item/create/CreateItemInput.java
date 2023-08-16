@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import lombok.*;
+import uk.co.jemos.podam.common.PodamCollection;
 
 @Getter
 @Setter
@@ -16,6 +17,8 @@ public class CreateItemInput implements ProcessorInput {
 
     private String title;
     private String description;
+    @PodamCollection(nbrElements = 2)
     private Set<UUID> vendorIds;
+    @PodamCollection(nbrElements = 2)
     private Set<UUID> tagIds;
 }

@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 class CreateItemOperationProcessorTest {
 
@@ -34,6 +36,7 @@ class CreateItemOperationProcessorTest {
   @InjectMocks
   private CreateItemOperationProcessor itemProcessor;
 
+  PodamFactory podamFactory = new PodamFactoryImpl();
   @BeforeEach
   public void setup() {
     MockitoAnnotations.openMocks(this);
@@ -42,27 +45,21 @@ class CreateItemOperationProcessorTest {
   @Test
   void testProcessWithValidInput() {
     // Mock input data
-    UUID vendorId1 = UUID.randomUUID();
-    UUID vendorId2 = UUID.randomUUID();
-    UUID tagId1 = UUID.randomUUID();
-    UUID tagId2 = UUID.randomUUID();
-    Set<UUID> vendorIds = new HashSet<>(Arrays.asList(vendorId1, vendorId2));
-    Set<UUID> tagIds = new HashSet<>(Arrays.asList(tagId1, tagId2));
-    String title = "Test Item";
-    String description = "This is a test item description.";
-    CreateItemInput input = CreateItemInput.builder()
-            .description(description)
-            .title(title)
-            .vendorIds(new HashSet<>(vendorIds))
-            .tagIds(new HashSet<>(tagIds))
-            .build();
+    CreateItemInput input = podamFactory.manufacturePojo(CreateItemInput.class);
+
+    List<UUID> vendorIds = input.getVendorIds().stream().toList();
+    UUID vendorId1=vendorIds.get(0);
+    UUID vendorId2=vendorIds.get(1);
+    List<UUID> tagIds = input.getTagIds().stream().toList();
+    UUID tagId1=tagIds.get(0);
+    UUID tagId2=tagIds.get(1);
 
     // Mock the vendor and tag repositories
     Vendor vendor1 = Vendor.builder()
-            .id(vendorId1)
+            .id(vendorIds.get(0))
             .build();
     Vendor vendor2 = Vendor.builder()
-            .id(vendorId2)
+            .id(vendorIds.get(1))
             .build();
     when(vendorRepository.findById(vendorId1)).thenReturn(Optional.of(vendor1));
     when(vendorRepository.findById(vendorId2)).thenReturn(Optional.of(vendor2));
@@ -87,8 +84,8 @@ class CreateItemOperationProcessorTest {
     // Verify the results
     assertNotNull(output);
     assertNotNull(output.getBaseItemDTO());
-    assertEquals(title, output.getBaseItemDTO().getTitle());
-    assertEquals(description, output.getBaseItemDTO().getDescription());
+    assertEquals(input.getTitle(), output.getBaseItemDTO().getTitle());
+    assertEquals(input.getDescription(), output.getBaseItemDTO().getDescription());
     assertEquals(2, output.getBaseItemDTO().getVendorIds().size());
     assertEquals(2, output.getBaseItemDTO().getTagIds().size());
 
@@ -97,23 +94,14 @@ class CreateItemOperationProcessorTest {
   }
   @Test
   void testProcessWithInvalidVendorId() {
-    // Mock input data with an invalid vendor ID
-    UUID invalidVendorId = UUID.randomUUID();
-    Set<UUID> vendorIds = Collections.singleton(invalidVendorId);
-    Set<UUID> tagIds = Collections.singleton(UUID.randomUUID());
 
-    // Mock input data
-    String title = "Test Item";
-    String description = "This is a test item description.";
-    CreateItemInput input = CreateItemInput.builder()
-            .description(description)
-            .title(title)
-            .vendorIds(new HashSet<>(vendorIds))
-            .tagIds(new HashSet<>(tagIds))
-            .build();
+    // Mock input data with invalid vendor id
+    CreateItemInput input = podamFactory.manufacturePojo(CreateItemInput.class);
+
+    List<UUID> vendorIds = input.getVendorIds().stream().toList();
 
     // Mock the vendor repository to return an empty Optional (not found)
-    when(vendorRepository.findById(invalidVendorId)).thenReturn(Optional.empty());
+    when(vendorRepository.findById(vendorIds.get(0))).thenReturn(Optional.empty());
 
     // Perform the operation and expect an exception
     assertThrows(VendorNotFoundException.class, () -> itemProcessor.process(input));
@@ -125,27 +113,18 @@ class CreateItemOperationProcessorTest {
 
   @Test
   void testProcessWithInvalidTagId() {
-    // Mock input data
-    UUID vendorId1 = UUID.randomUUID();
-    UUID vendorId2 = UUID.randomUUID();
-    Set<UUID> vendorIds = new HashSet<>(Arrays.asList(vendorId1, vendorId2));
-    String title = "Test Item";
-    String description = "This is a test item description.";
-    
-    // Mock input data with an invalid tag ID
-    UUID invalidTagId = UUID.randomUUID();
-    Set<UUID> tagIds = Collections.singleton(invalidTagId);
-    CreateItemInput input = CreateItemInput.builder()
-            .description(description)
-            .title(title)
-            .vendorIds(new HashSet<>(vendorIds))
-            .tagIds(new HashSet<>(tagIds))
-            .build();
+    // Mock input data with invalid tag id
+    CreateItemInput input = podamFactory.manufacturePojo(CreateItemInput.class);
+
+    List<UUID> tagIds = input.getTagIds().stream().toList();
+    List<UUID> vendorIds = input.getVendorIds().stream().toList();
+    UUID vendorId1=vendorIds.get(0);
+    UUID vendorId2=vendorIds.get(1);
 
     when(vendorRepository.findById(vendorId1)).thenReturn(Optional.of(new Vendor()));
     when(vendorRepository.findById(vendorId2)).thenReturn(Optional.of(new Vendor()));
     // Mock the tag repository to return an empty Optional (not found)
-    when(tagRepository.findById(invalidTagId)).thenReturn(Optional.empty());
+    when(tagRepository.findById(tagIds.get(0))).thenReturn(Optional.empty());
 
     // Perform the operation and expect an exception
     assertThrows(TagNotFoundException.class, () -> itemProcessor.process(input));
