@@ -12,6 +12,9 @@ import com.tinqin.api.operation.tag.findall.FindAllTagsOutput;
 import com.tinqin.api.operation.tag.findbyid.FindTagByIdInput;
 import com.tinqin.api.operation.tag.findbyid.FindTagByIdOperation;
 import com.tinqin.api.operation.tag.findbyid.FindTagByIdOutput;
+import com.tinqin.api.operation.tag.generatefixture.GenerateTagFixtureInput;
+import com.tinqin.api.operation.tag.generatefixture.GenerateTagFixtureOperation;
+import com.tinqin.api.operation.tag.generatefixture.GenerateTagFixtureOutput;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,7 @@ public class TagController {
   private final EditTagOperation editTagOperation;
   private final FindAllTagsOperation findAllTagsOperation;
   private final FindTagByIdOperation findTagByIdOperation;
+  private final GenerateTagFixtureOperation generateTagFixtureOperation;
 
   @PostMapping
   public ResponseEntity<CreateTagOutput> create(@RequestBody CreateTagInput request) {
@@ -48,5 +52,12 @@ public class TagController {
   @Transactional
   public ResponseEntity<EditTagOutput> update(@RequestBody EditTagInput request) {
     return ResponseEntity.ok(editTagOperation.process(request));
+  }
+
+  @PostMapping("/generate")
+  public ResponseEntity<GenerateTagFixtureOutput> generate(@RequestBody GenerateTagFixtureInput request){
+    return ResponseEntity.ok(
+            generateTagFixtureOperation.process(request)
+    );
   }
 }

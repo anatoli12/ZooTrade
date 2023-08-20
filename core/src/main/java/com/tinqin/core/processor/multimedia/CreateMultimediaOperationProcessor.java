@@ -35,8 +35,7 @@ public class CreateMultimediaOperationProcessor implements CreateMultimediaOpera
             .id(String.valueOf(multimedia.getId()))
             .url(multimedia.getUrl())
             .itemId(Optional.ofNullable(multimedia.getItem())
-                    .map(item -> String.valueOf(item.getId()))
-                    .orElse(""))
+                    .map(Item::getId))
             .build();
     return CreateMultimediaOutput.builder()
             .baseMultimediaDTO(base)

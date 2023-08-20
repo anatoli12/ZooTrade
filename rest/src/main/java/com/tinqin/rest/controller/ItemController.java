@@ -25,6 +25,9 @@ import com.tinqin.api.operation.item.findallregex.FindAllItemsRegexOutput;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdInput;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdOperation;
 import com.tinqin.api.operation.item.findbyid.FindItemByIdOutput;
+import com.tinqin.api.operation.item.generateitemfixture.GenerateItemFixtureInput;
+import com.tinqin.api.operation.item.generateitemfixture.GenerateItemFixtureOperation;
+import com.tinqin.api.operation.item.generateitemfixture.GenerateItemFixtureOutput;
 import com.tinqin.api.operation.item.removemultimediafromitem.RemoveMultimediaFromItemInput;
 import com.tinqin.api.operation.item.removemultimediafromitem.RemoveMultimediaFromItemOperation;
 import com.tinqin.api.operation.item.removemultimediafromitem.RemoveMultimediaFromItemOutput;
@@ -64,6 +67,7 @@ public class ItemController {
   private final RemoveMultimediaFromItemOperation removeMultimediaFromItemOperation;
   private final RemoveVendorsFromItemOperation removeVendorsFromItemOperation;
   private final AddCommentToItemOperation addCommentToItemOperation;
+  private final GenerateItemFixtureOperation generateItemFixtureOperation;
 
   @GetMapping("/all/params")
   @Transactional
@@ -111,6 +115,13 @@ public class ItemController {
   })
   public ResponseEntity<CreateItemOutput> create(@RequestBody CreateItemInput request) {
     return ResponseEntity.ok(createItemOperation.process(request));
+  }
+
+  @PostMapping("/generate")
+  @Operation(summary = "Generate random items",
+  description = "Creates random items, requires at least 2 tags and vendors")
+  public ResponseEntity<GenerateItemFixtureOutput> generate(@RequestBody GenerateItemFixtureInput input){
+    return ResponseEntity.ok(generateItemFixtureOperation.process(input));
   }
 
   @DeleteMapping

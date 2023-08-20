@@ -1,5 +1,7 @@
 package com.tinqin.api.operation.multimedia;
 
+import java.util.Optional;
+import java.util.UUID;
 import lombok.*;
 
 @Builder
@@ -10,5 +12,5 @@ import lombok.*;
 public class BaseMultimediaDTO {
     private String id;
     private String url;
-    private String itemId;
+    private Optional<UUID> itemId;
 }

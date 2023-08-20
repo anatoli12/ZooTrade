@@ -12,7 +12,7 @@ public class MultimediaEntityToDTOProcessor {
     return BaseMultimediaDTO.builder()
         .id(String.valueOf(multimedia.getId()))
         .url(multimedia.getUrl())
-        .itemId(String.valueOf(Optional.of(multimedia.getItem().getId())))
+        .itemId(Optional.of(multimedia.getItem().getId()))
         .build();
   }
 }
