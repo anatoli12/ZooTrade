@@ -12,6 +12,9 @@ import com.tinqin.api.operation.vendor.findall.FindAllVendorsOutput;
 import com.tinqin.api.operation.vendor.findbyid.FindVendorByIdInput;
 import com.tinqin.api.operation.vendor.findbyid.FindVendorByIdOperation;
 import com.tinqin.api.operation.vendor.findbyid.FindVendorByIdOutput;
+import com.tinqin.api.operation.vendor.generatefixture.GenerateVendorFixtureInput;
+import com.tinqin.api.operation.vendor.generatefixture.GenerateVendorFixtureOperation;
+import com.tinqin.api.operation.vendor.generatefixture.GenerateVendorFixtureOutput;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,7 @@ public class VendorController {
   private final EditVendorOperation editVendorOperation;
   private final FindAllVendorsOperation findAllVendorsOperation;
   private final FindVendorByIdOperation findVendorByIdOperation;
+  private final GenerateVendorFixtureOperation generateVendorFixtureOperation;
 
   @PostMapping
   public ResponseEntity<CreateVendorOutput> create(@RequestBody CreateVendorInput request) {
@@ -48,5 +52,10 @@ public class VendorController {
   @Transactional
   public ResponseEntity<EditVendorOutput> update(@RequestBody EditVendorInput request) {
     return ResponseEntity.ok(editVendorOperation.process(request));
+  }
+  
+  @PostMapping("/generate")
+  public ResponseEntity<GenerateVendorFixtureOutput> generate(@RequestBody GenerateVendorFixtureInput request){
+    return ResponseEntity.ok(generateVendorFixtureOperation.process(request));
   }
 }

@@ -4,9 +4,7 @@ import com.tinqin.api.operation.multimedia.BaseMultimediaDTO;
 import com.tinqin.api.operation.multimedia.findall.FindAllMultimediaInput;
 import com.tinqin.api.operation.multimedia.findall.FindAllMultimediaOperation;
 import com.tinqin.api.operation.multimedia.findall.FindAllMultimediaOutput;
-import com.tinqin.persistence.model.Multimedia;
 import com.tinqin.persistence.repository.MultimedaRepository;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +18,8 @@ public class FindAllMultimediaOperationProcessor implements FindAllMultimediaOpe
 
   @Override
   public FindAllMultimediaOutput process(FindAllMultimediaInput request) {
-    Set<Multimedia> multimedia =
-            new HashSet<>(multimediaRepository.findAll());
+    var multimedia =
+            multimediaRepository.findAll();
     Set<BaseMultimediaDTO> base =
         multimedia.stream()
             .map(MultimediaEntityToDTOProcessor::convertEntityToDTO)
