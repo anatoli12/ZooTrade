@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class GenerateItemFixtureOutput implements ProcessorOutput {
     private List<CreateItemOutput> createItemOutputList;
 }

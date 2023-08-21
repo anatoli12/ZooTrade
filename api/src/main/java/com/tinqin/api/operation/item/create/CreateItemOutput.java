@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class CreateItemOutput implements ProcessorOutput {
     private BaseItemDTO baseItemDTO;
 }
